@@ -1,0 +1,165 @@
+/* --- PHASE 4 : DESIGN ET COSMÉTIQUE (Inspiré de l'image) --- */
+
+:root {
+  --bg-color: #121314;       /* Fond noir profond */
+  --card-bg: #1a1b1c;        /* Noir légèrement plus clair pour le bloc */
+  --text-main: #ffffff;      /* Blanc pur */
+  --text-muted: #8a8d90;     /* Gris pour les dates */
+  --accent-yellow: #fcd34d;  /* Jaune vif pour les détails */
+  --shadow-color: #ffffff;   /* Ombre blanche comme sur l'image */
+}
+
+/* Style global du corps de la page */
+body {
+  margin: 0;
+  padding: 40px 20px;
+  background-color: var(--bg-color);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-main);
+  display: flex;
+  justify-content: center;
+}
+
+/* Le conteneur principal (le composant Changelog) */
+main {
+  background-color: var(--card-bg);
+  padding: 40px;
+  border-radius: 12px;
+  border: 1px solid #2a2b2c;
+  max-width: 700px;
+  width: 100%;
+  /* Ombre blanche nette et décalée style "Versioning examples" */
+  box-shadow: 6px 6px 0px var(--shadow-color);
+}
+
+/* En-tête */
+h1 {
+  font-size: 28px;
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+main > p {
+  color: var(--text-muted);
+  margin-bottom: 40px;
+  font-size: 14px;
+}
+
+/* --- STRUCTURE DU FIL (PHASE 3 MISE À JOUR) --- */
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 40px 0;
+  position: relative;
+}
+
+/* La ligne verticale */
+ul::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 160px; /* Ajusté pour l'espace des dates */
+  width: 2px;
+  background-color: #2a2b2c;
+}
+
+li {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 60px;
+  align-items: center;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+/* Les dates style "Date-Based" */
+time {
+  text-align: right;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Les titres de modifications style "Semantic / SemVer" */
+h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+/* Le point sur la ligne (Bullet point jaune pour le contraste) */
+li::after {
+  content: '';
+  position: absolute;
+  left: 161px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background-color: var(--accent-yellow);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--accent-yellow); /* Léger effet néon */
+}
+
+/* --- LE LIEN DE NAVIGATION (STYLISÉ EN BOUTON) --- */
+a.btn-changelog {
+  display: inline-block;
+  background-color: var(--text-main);
+  color: var(--bg-color);
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 2px solid var(--text-main);
+}
+
+a.btn-changelog:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+  background-color: var(--accent-yellow);
+  border-color: var(--accent-yellow);
+}
+/* --- RESPONSIVE : SMARTPHONES (600px et moins) --- */
+@media (max-width: 600px) {
+  
+  /* 1. On retire l'ombre blanche sur petit écran */
+  main {
+    box-shadow: none;
+    padding: 20px; /* On réduit un peu l'espace interne */
+  }
+
+  /* 2. On décale la ligne verticale tout à gauche (à 10px du bord du li) */
+  ul::before {
+    left: 10px;
+  }
+
+  /* 3. On casse la grille : tout s'empile verticalement */
+  li {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aligne le texte à gauche */
+    gap: 8px; /* Espace réduit entre la date et le titre */
+    padding-left: 30px; /* Laisse de la place pour la ligne et le point à gauche */
+    margin-bottom: 24px;
+  }
+
+  /* 4. La date ne regarde plus à droite, elle s'aligne normalement à gauche */
+  time {
+    text-align: left;
+  }
+
+  /* 5. On replace le point jaune pour qu'il s'aligne pile sur la nouvelle position de la ligne */
+  li::after {
+    left: 11px;
+    top: 12px; /* On le remonte pour l'aligner en face de la date, plus au milieu du bloc */
+    transform: translate(-50%, 0);
+  }
+}
